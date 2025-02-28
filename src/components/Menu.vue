@@ -12,7 +12,7 @@
       <!-- Logo de la marca -->
       <div class="flex flex-row items-center w-screen">
         <img
-          src="/public/logos/brand-logo-menu.png"
+          src="/logos/brand-logo-menu.png"
           alt="Aluxez Administración"
           :class="[isScrolled ? 'w-32' : 'w-64']"
           class="h-auto object-contain transition-all duration-300"
@@ -133,6 +133,7 @@
 
 <script setup>
 import { ref, onMounted, onUnmounted } from "vue";
+
 
 const isMenuOpen = ref(false);
 const isScrolled = ref(false);
