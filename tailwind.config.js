@@ -7,6 +7,9 @@ export default {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        nunito: ["Nunito Sans", "sans-serif"], // Agregamos la fuente
+      },
       colors: {
         primary: {
           light: '#80c8c8', // Color primario claro

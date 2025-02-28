@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@astrojs/vue": "^5.0.7",
+    "@fontsource/nunito-sans": "^5.1.1",
     "@headlessui/vue": "^1.7.23",
     "@heroicons/vue": "^2.2.0",
     "astro": "^5.3.1"
