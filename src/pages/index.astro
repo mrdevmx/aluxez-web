@@ -2,9 +2,13 @@
 import Menu from "../components/Menu.vue";
 import Layout from "../layouts/Layout.astro";
 import Header from "../layouts/Header.astro";
+import About from "../components/About.vue";
+import Footer from '../components/Footer.vue';
 ---
 
 <Layout>
   <Menu client:load />
   <Header />
+  <About client:load />
+  <Footer client:load />
 </Layout>
