@@ -7,7 +7,7 @@
     ref="menuRef"
   >
     <div
-      class="absolute w-screen h-auto flex justify-between items-center px-20"
+      class="container m-auto w-screen h-auto flex justify-between items-center"
     >
       <!-- Logo de la marca -->
       <div class="flex flex-row items-center w-screen">

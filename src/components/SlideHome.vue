@@ -9,26 +9,29 @@
         }
     </style>
 <template>
-  <div class="w-full h-[700px] flex items-center px-6">
-    <div
+  <div class="container m-auto p-10 w-full h-[700px] flex flex-wrap items-center mt-[128px]">
+    <div class="relative max-lg:text-center w-1/2 max-lg:w-full max-lg:h-[50%] max-lg:mt-[3rem]">
+      <div
       v-for="(slide, index) in slides"
       :key="index"
-      class="w-3/5 absolute transition-opacity duration-1000 ease-in-out px-20 mt-20"
+      class="max-lg:w-full absolute transition-opacity duration-1000 ease-in-out"
       :class="{
         'opacity-100': index === currentIndex,
         'opacity-0': index !== currentIndex,
       }"
     >
-      <h1 class="text-5xl sm:text-5xl font-bold text-secondary-light">
+      <h1 class="text-5xl text-wrap sm:text-5xl font-bold text-secondary-light">
         {{ slide.title }}
         <span class="text-secondary">{{ slide.subtitle }}</span>
       </h1>
-      <p class="mt-4 text-lg text-left text-secondary-light max-w-xl">
+      <p class="w-full mt-4 text-lg text-left max-lg:text-center text-secondary-light">
         {{ slide.description }}
       </p>
+      </div>
     </div>
-    <div class="w-full flex flex-row-reverse backdrop-opacity-10">
-      <div class="w-2/5 grid grid-flow-col grid-rows-2 grid-cols-3 gap-8">
+    
+    <div class="w-1/2 flex flex-row-reverse backdrop-opacity-10 max-lg:w-full max-lg:h-[50%] max-lg:mt-[3rem] max-lg:hidden">
+      <div class="w-full grid grid-flow-col grid-rows-2 grid-cols-3 gap-8">
         <div class="transform scale-75 -rotate-6 translate-x-20 ">
           <img src="/public/iconografia/Recurso44.png" alt="" class="animate-floating" />
         </div>
