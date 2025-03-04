@@ -49,10 +49,25 @@
         </div>
       </div>
     </div>
+
+    <Carousel :items="images" :autoplay="true" :loop="true">
+    <template #default="{ item }">
+      <img :src="item" alt="Imagen del carrusel" />
+    </template>
+  </Carousel>
+
   </div>
 </template>
 <script setup>
 import { ref, onMounted } from "vue";
+import Carousel from "./Carousel.vue";
+
+const images = [
+  "/iconografia/Recurso44.png",
+  "/iconografia/Recurso39.png",
+  "/iconografia/Recurso41.png",
+  "/iconografia/Recurso42.png",
+];
 
 const slides = ref([
   {
