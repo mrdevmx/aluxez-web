@@ -194,7 +194,7 @@ const callsToAction = [
     ],
   },
   {
-    text: "9983058106",
+    text: "9984819782",
     link: "#",
     iconClass: "fa-brands fa-whatsapp size-5 flex-none text-green-400",
   },

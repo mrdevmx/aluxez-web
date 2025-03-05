@@ -3,7 +3,7 @@
       <!-- Patrón de fondo -->
       <div class="absolute w-full inset-0 bg-[url('/patterns/pattern-footer.png')] bg-[length:20%] opacity-10"></div>
   
-      <div class="relative w-full items-center justify-center flex flex-col space-y-4">
+      <div class="relative w-full items-center justify-center flex flex-col space-y-4 font-bold">
         <!-- Links principales -->
         <nav class="mb-4">
           <ul class="flex justify-center space-x-6 text-sm">
