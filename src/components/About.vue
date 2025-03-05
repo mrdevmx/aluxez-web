@@ -1,6 +1,6 @@
 <template>
-  <section class="container mx-auto px-6 py-16 flex">
-    <div class="w-1/2 items-center">
+  <section class="container mx-auto px-6 py-16 flex flex-wrap max-lg:mt-[-20%] max-md:mt-[-30%]"> 
+    <div class="w-1/2 max-lg:w-full items-center">
       <!-- Texto -->
       <div class="w-full">
         <h2 class="text-5xl font-bold text-secondary leading-tight">
@@ -20,8 +20,8 @@
     </div>
 
     <!-- Lista de trabajos -->
-    <div class="container px-6 py-16 w-1/2 mt-12">
-      <ul class="w-full m-auto px-6 divide-y divide-secondary-dark">
+    <div class="w-1/2 max-lg:w-full mt-12">
+      <ul class="w-full m-auto lg:px-6 divide-y divide-secondary-dark">
         <li v-for="(job, index) in jobs" :key="index" class="py-6">
           <h3 class="text-l font-semibold text-secondary">{{ job.title }}</h3>
           <p class="text-sm text-secondary-light mt-2">{{ job.description }}</p>
@@ -32,7 +32,7 @@
       </ul>
 
       <!-- Link de Ver Más -->
-      <div class="w-full mt-6">
+      <div class="w-full lg:px-6 mt-6">
         <button class="flex items-center gap-2 bg-secondary-dark hover:bg-secondary text-secondary-light hover:text-secondary-dark font-semibold py-2 px-4 rounded-lg shadow-md transition">
     Conoce nuestra historia
     <!-- Flecha de FontAwesome -->
