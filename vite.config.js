@@ -9,10 +9,20 @@ export default {
     ],
     host: '0.0.0.0', // Permite conexiones desde cualquier IP
     port: 80,
-    strictPort: true
+    strictPort: true,
+    cors: true,
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,OPTIONS',
+      'Access-Control-Allow-Headers': 'Content-Type, Authorization'
+    }
   },
   server: {
     host: '0.0.0.0',
-    port: 3000
+    port: 80,
+    cors: true,
+    headers: {
+      'Access-Control-Allow-Origin': '*'
+    }
   }
 };
