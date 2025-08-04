@@ -5,7 +5,8 @@
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
-    "preview": "astro preview --port 80",
+    "preview": "astro preview",
+    "start": "astro preview --port 80 --host",
     "astro": "astro"
   },
   "dependencies": {
