@@ -1,0 +1,225 @@
+---
+// Carousel.astro - Migración del componente Vue a Astro
+interface Props {
+  items: any[];
+  autoplay?: boolean;
+  autoplaySpeed?: number;
+  loop?: boolean;
+  showDots?: boolean;
+  showArrows?: boolean;
+}
+
+const { 
+  items, 
+  autoplay = true, 
+  autoplaySpeed = 3000, 
+  loop = true, 
+  showDots = true, 
+  showArrows = true 
+} = Astro.props;
+---
+
+<div 
+  id="carousel" 
+  class="carousel lg:hidden" 
+  data-autoplay={autoplay}
+  data-autoplay-speed={autoplaySpeed}
+  data-loop={loop}
+>
+  <!-- Flechas de navegación -->
+  {showArrows && (
+    <>
+      <button id="prev-btn" class="prev">
+        &#10094;
+      </button>
+      <button id="next-btn" class="next">
+        &#10095;
+      </button>
+    </>
+  )}
+
+  <!-- Slides -->
+  <div id="carousel-track" class="carousel-track">
+    {items.map((item, index) => (
+      <div class="carousel-item flex items-center justify-center">
+        <img src={typeof item === 'string' ? item : item.src} alt={`Imagen ${index + 1}`} />
+      </div>
+    ))}
+  </div>
+
+  <!-- Paginación (dots) -->
+  {showDots && (
+    <div class="dots">
+      {items.map((_, index) => (
+        <span 
+          class={`dot ${index === 0 ? 'active' : ''}`}
+          data-index={index}
+        ></span>
+      ))}
+    </div>
+  )}
+</div>
+
+<style>
+.carousel {
+  position: relative;
+  overflow: hidden;
+  width: 50%;
+  max-width: 600px;
+  margin: auto;
+}
+.carousel-track {
+  display: flex;
+  transition: transform 0.5s ease-in-out;
+  transform: translateX(0%);
+}
+.carousel-item {
+  min-width: 100%;
+  text-align: center;
+}
+.carousel-item img {
+  margin: auto;
+}
+.prev, .next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: transparent;
+  color: #CAAA5F;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  z-index: 10;
+}
+.prev { left: 10px; }
+.next { right: 10px; }
+.dots {
+  text-align: center;
+  margin-top: 10px;
+}
+.dots span {
+  height: 10px;
+  width: 10px;
+  margin: 5px;
+  background: #dac48f;
+  display: inline-block;
+  border-radius: 50%;
+  cursor: pointer;
+}
+.dots .active {
+  background: #CAAA5F;
+}
+</style>
+
+<script>
+  // JavaScript para manejar la funcionalidad del carousel
+  interface CarouselElements {
+    carousel: HTMLElement | null;
+    track: HTMLElement | null;
+    prevBtn: HTMLElement | null;
+    nextBtn: HTMLElement | null;
+    dots: NodeListOf<Element>;
+  }
+
+  interface CarouselConfig {
+    autoplay: boolean;
+    autoplaySpeed: number;
+    loop: boolean;
+    itemCount: number;
+  }
+
+  class AstroCarousel {
+    private elements: CarouselElements;
+    private config: CarouselConfig;
+    private currentIndex: number = 0;
+    private autoplayInterval: number | null = null;
+
+    constructor() {
+      this.elements = {
+        carousel: document.getElementById('carousel'),
+        track: document.getElementById('carousel-track'),
+        prevBtn: document.getElementById('prev-btn'),
+        nextBtn: document.getElementById('next-btn'),
+        dots: document.querySelectorAll('.dot')
+      };
+      
+      // Obtener configuración del DOM
+      const carousel = this.elements.carousel;
+      this.config = {
+        autoplay: carousel?.dataset.autoplay === 'true',
+        autoplaySpeed: parseInt(carousel?.dataset.autoplaySpeed || '3000'),
+        loop: carousel?.dataset.loop === 'true',
+        itemCount: this.elements.dots.length
+      };
+      
+      this.init();
+    }
+    
+    init(): void {
+      this.bindEvents();
+      if (this.config.autoplay) {
+        this.startAutoplay();
+      }
+    }
+    
+    bindEvents(): void {
+      this.elements.prevBtn?.addEventListener('click', () => this.goToPrev());
+      this.elements.nextBtn?.addEventListener('click', () => this.goToNext());
+      
+      this.elements.dots.forEach((dot: Element, index: number) => {
+        dot.addEventListener('click', () => this.goToSlide(index));
+      });
+      
+      this.elements.carousel?.addEventListener('mouseenter', () => this.stopAutoplay());
+      this.elements.carousel?.addEventListener('mouseleave', () => this.startAutoplay());
+    }
+    
+    goToSlide(index: number): void {
+      if (this.config.loop || (index >= 0 && index < this.config.itemCount)) {
+        this.currentIndex = index;
+        this.updateSlide();
+      }
+    }
+    
+    goToPrev(): void {
+      const prevIndex = this.currentIndex === 0 ? this.config.itemCount - 1 : this.currentIndex - 1;
+      this.goToSlide(prevIndex);
+    }
+    
+    goToNext(): void {
+      const nextIndex = this.currentIndex === this.config.itemCount - 1 ? 0 : this.currentIndex + 1;
+      this.goToSlide(nextIndex);
+    }
+    
+    updateSlide(): void {
+      if (this.elements.track) {
+        this.elements.track.style.transform = `translateX(-${this.currentIndex * 100}%)`;
+      }
+      
+      // Actualizar dots
+      this.elements.dots.forEach((dot: Element, index: number) => {
+        dot.classList.toggle('active', index === this.currentIndex);
+      });
+    }
+    
+    startAutoplay(): void {
+      if (this.config.autoplay && !this.autoplayInterval) {
+        this.autoplayInterval = window.setInterval(() => {
+          this.goToNext();
+        }, this.config.autoplaySpeed);
+      }
+    }
+    
+    stopAutoplay(): void {
+      if (this.autoplayInterval) {
+        clearInterval(this.autoplayInterval);
+        this.autoplayInterval = null;
+      }
+    }
+  }
+
+  // Inicializar cuando el DOM esté listo
+  document.addEventListener('DOMContentLoaded', () => {
+    new AstroCarousel();
+  });
+</script>

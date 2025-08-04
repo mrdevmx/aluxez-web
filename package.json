@@ -3,18 +3,15 @@
   "type": "module",
   "version": "0.0.1",
   "scripts": {
-    "dev": "astro dev",
+    "dev": "astro dev --port 3000",
     "build": "astro build",
-    "preview": "astro preview",
-    "start": "astro preview --port 80 --host",
+    "preview": "astro preview --port 3000",
+    "start": "astro preview --port 80 --host 0.0.0.0",
     "astro": "astro"
   },
   "dependencies": {
-    "@astrojs/vue": "^5.0.7",
     "@fontsource/nunito-sans": "^5.1.1",
     "@fortawesome/fontawesome-free": "^6.7.2",
-    "@headlessui/vue": "^1.7.23",
-    "@heroicons/vue": "^2.2.0",
     "astro": "^5.3.1"
   },
   "devDependencies": {

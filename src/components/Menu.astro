@@ -1,0 +1,231 @@
+---
+// Menu.astro - Migración del componente Vue a Astro
+const brandLogo = '/logos/brand-logo-menu.png';
+
+const menuItems = [
+  {
+    title: "Conócenos",
+    description: "Quiénes somos, nuestros valores y por qué somos la mejor opción.",
+    link: "#",
+    iconClass: "fas fa-users size-6 text-secondary group-hover:text-secondary",
+  },
+  {
+    title: "Soluciones",
+    description: "Administración, transparencia, mantenimiento, atención y tecnología.",
+    link: "#",
+    iconClass: "fas fa-cogs size-6 text-secondary group-hover:text-secondary",
+  },
+  {
+    title: "FAQ",
+    description: "Respuestas a dudas sobre nuestros servicios y procesos.",
+    link: "#",
+    iconClass: "fas fa-question-circle size-6 text-secondary group-hover:text-secondary",
+  },
+  {
+    title: "Blog",
+    description: "Consejos e información sobre administración residencial.",
+    link: "#",
+    iconClass: "fas fa-blog size-6 text-secondary group-hover:text-secondary",
+  },
+  {
+    title: "Contacto ",
+    description: "Solicita información o agenda una consulta",
+    link: "#",
+    iconClass: "fas fa-envelope size-6 text-secondary group-hover:text-secondary",
+  },
+];
+
+const socialIcons = [
+  {
+    iconClass: "fa-brands fa-facebook size-7 flex-none text-secondary",
+  },
+  {
+    iconClass: "fa-brands fa-instagram size-7 flex-none text-secondary",
+  },
+  {
+    iconClass: "fa-brands fa-square-x-twitter size-7 flex-none text-secondary",
+  },
+  {
+    iconClass: "fa-brands fa-youtube size-7 flex-none text-secondary",
+  }
+];
+---
+
+<div id="menu" class="fixed top-0 z-10 flex w-screen transition-all duration-300 shadow-sm h-[128px]">
+  <div class="container m-auto w-screen h-auto flex justify-between items-center">
+    <!-- Logo de la marca -->
+    <div class="flex flex-row items-center w-screen">
+      <img
+        src={brandLogo}
+        alt="Aluxez Administración"
+        class="w-64 h-auto object-contain transition-all duration-300"
+        id="brand-logo"
+      />
+    </div>
+    <div class="flex flex-row-reverse w-screen">
+      <button
+        id="menu-toggle"
+        class="flex flex-col justify-center items-center w-12 h-12 p-2 relative transition-all duration-300"
+      >
+        <div
+          id="line1"
+          class="w-8 h-1 bg-secondary rounded transition-transform duration-300"
+        ></div>
+        <div
+          id="line2"
+          class="w-8 h-1 bg-secondary rounded my-1 transition-opacity duration-300"
+        ></div>
+        <div
+          id="line3"
+          class="w-8 h-1 bg-secondary rounded transition-transform duration-300"
+        ></div>
+      </button>
+    </div>
+  </div>
+
+  <!-- Menu dropdown -->
+  <div
+    id="menu-dropdown"
+    class="absolute left-1/2 z-10 mt-8 flex w-screen max-w-max -translate-x-1/2 px-4 opacity-0 translate-y-1 pointer-events-none transition-all duration-200"
+  >
+    <div
+      class="w-screen max-w-md flex-auto overflow-hidden rounded-3xl bg-primary-dark text-sm/6 ring-1 shadow-lg ring-gray-900/5"
+    >
+      <div class="p-4">
+        {menuItems.map((item) => (
+          <div class="group relative flex gap-x-6 rounded-lg p-4 hover:bg-secondary">
+            <div class="mt-1 flex size-11 flex-none items-center justify-center rounded-lg bg-primary group-hover:bg-primary">
+              <i class={`${item.iconClass} flex items-center justify-center`} aria-hidden="true"></i>
+            </div>
+            <div>
+              <a
+                href={item.link}
+                class="font-semibold text-secondary group-hover:text-secondary-dark"
+              >
+                {item.title}
+                <span class="absolute inset-0"></span>
+              </a>
+              <p class="mt-1 text-secondary group-hover:text-secondary-dark">{item.description}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+      <div class="grid grid-cols-2 divide-x divide-primary bg-primary-dark">
+        <a
+          href="#"
+          class="flex items-center justify-center gap-x-2.5 p-3 font-semibold text-secondary hover:text-secondary"
+        >
+          {socialIcons.map((icon) => (
+            <i class={`${icon.iconClass} flex items-center justify-center`} aria-hidden="true"></i>
+          ))}
+        </a>
+        <a
+          href="#"
+          class="flex items-center justify-center gap-x-2.5 p-3 font-semibold text-secondary hover:text-secondary"
+        >
+          <i class="fa-brands fa-whatsapp size-5 flex-none text-green-400" aria-hidden="true"></i>
+          9984819782
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // JavaScript para manejar la interactividad del menú
+  interface MenuElements {
+    menuElement: HTMLElement | null;
+    menuToggle: HTMLElement | null;
+    menuDropdown: HTMLElement | null;
+    brandLogo: HTMLElement | null;
+    line1: HTMLElement | null;
+    line2: HTMLElement | null;
+    line3: HTMLElement | null;
+  }
+
+  class MenuController {
+    private elements: MenuElements;
+    private isMenuOpen: boolean = false;
+    private isScrolled: boolean = false;
+
+    constructor() {
+      this.elements = {
+        menuElement: document.getElementById('menu'),
+        menuToggle: document.getElementById('menu-toggle'),
+        menuDropdown: document.getElementById('menu-dropdown'),
+        brandLogo: document.getElementById('brand-logo'),
+        line1: document.getElementById('line1'),
+        line2: document.getElementById('line2'),
+        line3: document.getElementById('line3')
+      };
+
+      this.init();
+    }
+
+    init(): void {
+      this.bindEvents();
+    }
+
+    bindEvents(): void {
+      this.elements.menuToggle?.addEventListener('click', () => this.toggleMenu());
+      window.addEventListener('scroll', () => this.handleScroll());
+      document.addEventListener('click', (event: Event) => this.handleClickOutside(event));
+    }
+
+    toggleMenu(): void {
+      this.isMenuOpen = !this.isMenuOpen;
+      
+      if (this.isMenuOpen) {
+        // Abrir menu
+        this.elements.menuDropdown?.classList.remove('opacity-0', 'translate-y-1', 'pointer-events-none');
+        this.elements.menuDropdown?.classList.add('opacity-100', 'translate-y-0');
+        
+        // Animar hamburguesa
+        this.elements.line1?.classList.add('rotate-45', 'translate-y-2');
+        this.elements.line2?.classList.add('opacity-0');
+        this.elements.line3?.classList.add('-rotate-45', '-translate-y-2');
+      } else {
+        // Cerrar menu
+        this.elements.menuDropdown?.classList.add('opacity-0', 'translate-y-1', 'pointer-events-none');
+        this.elements.menuDropdown?.classList.remove('opacity-100', 'translate-y-0');
+        
+        // Restaurar hamburguesa
+        this.elements.line1?.classList.remove('rotate-45', 'translate-y-2');
+        this.elements.line2?.classList.remove('opacity-0');
+        this.elements.line3?.classList.remove('-rotate-45', '-translate-y-2');
+      }
+    }
+
+    handleScroll(): void {
+      const scrolled = window.scrollY > 50;
+      
+      if (scrolled !== this.isScrolled) {
+        this.isScrolled = scrolled;
+        
+        if (this.isScrolled) {
+          this.elements.menuElement?.classList.add('bg-primary-dark', 'h-[80px]', 'shadow-lg');
+          this.elements.menuElement?.classList.remove('h-[128px]');
+          this.elements.brandLogo?.classList.add('w-32');
+          this.elements.brandLogo?.classList.remove('w-64');
+        } else {
+          this.elements.menuElement?.classList.remove('bg-primary-dark', 'h-[80px]', 'shadow-lg');
+          this.elements.menuElement?.classList.add('h-[128px]');
+          this.elements.brandLogo?.classList.remove('w-32');
+          this.elements.brandLogo?.classList.add('w-64');
+        }
+      }
+    }
+
+    handleClickOutside(event: Event): void {
+      const target = event.target as HTMLElement;
+      if (this.elements.menuElement && !this.elements.menuElement.contains(target) && this.isMenuOpen) {
+        this.toggleMenu();
+      }
+    }
+  }
+
+  // Event listeners
+  document.addEventListener('DOMContentLoaded', () => {
+    new MenuController();
+  });
+</script>
