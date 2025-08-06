@@ -1,8 +1,21 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
-import viteConfig from './vite.config.js';
 
 // https://astro.build/config
 export default defineConfig({
-    vite: viteConfig
+    server: {
+        host: '0.0.0.0',
+        port: 3000
+    },
+    vite: {
+        server: {
+            host: '0.0.0.0',
+            port: 3000,
+        },
+        preview: {
+            host: '0.0.0.0',
+            port: 3000,
+            allowedHosts: true
+        }
+    }
 });
