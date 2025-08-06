@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
-    "preview": "vite preview --host --port 3000",
+    "preview": "astro preview --port 3000 --host",
     "start": "astro preview --port 80 --host"
   },
   "dependencies": {
