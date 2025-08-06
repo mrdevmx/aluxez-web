@@ -1,5 +1,5 @@
 # Use Node.js 18 Alpine for smaller image size
-FROM node:18-alpine AS builder
+FROM node:18-alpine
 
 WORKDIR /app
 
@@ -11,15 +11,13 @@ RUN npm install
 COPY . .
 RUN npm run build
 
-# Production stage - Use nginx for serving static files
-FROM nginx:alpine AS runner
+# Expose port
+EXPOSE 3000
 
-# Copy built static files to nginx
-COPY --from=builder /app/dist /usr/share/nginx/html
+# Set environment variables
+ENV NODE_ENV=production
+ENV PORT=3000
+ENV HOST=0.0.0.0
 
-# Copy custom nginx config
-COPY nginx.conf /etc/nginx/nginx.conf
-
-EXPOSE 80
-
-CMD ["nginx", "-g", "daemon off;"]
+# Start the application
+CMD ["npm", "run", "start"]
