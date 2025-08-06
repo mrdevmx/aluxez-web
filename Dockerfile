@@ -11,24 +11,15 @@ RUN npm install
 COPY . .
 RUN npm run build
 
-# Production stage
-FROM node:18-alpine AS runner
-WORKDIR /app
+# Production stage - Use nginx for serving static files
+FROM nginx:alpine AS runner
 
-# Create a non-root user
-RUN addgroup --system --gid 1001 nodejs
-RUN adduser --system --uid 1001 astro
+# Copy built static files to nginx
+COPY --from=builder /app/dist /usr/share/nginx/html
 
-# Copy built application and node_modules
-COPY --from=builder --chown=astro:nodejs /app/dist ./dist
-COPY --from=builder --chown=astro:nodejs /app/node_modules ./node_modules
-COPY --from=builder --chown=astro:nodejs /app/package.json ./package.json
+# Copy custom nginx config
+COPY nginx.conf /etc/nginx/nginx.conf
 
-USER astro
+EXPOSE 80
 
-EXPOSE 3000
-
-ENV NODE_ENV=production
-ENV PORT=3000
-
-CMD ["npm", "run", "start"]
+CMD ["nginx", "-g", "daemon off;"]
