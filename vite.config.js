@@ -11,6 +11,7 @@ export default defineConfig({
     allowedHosts: [
       'all',
       'w8scwoos8kwg0s8cokggowco.154.122.229.178.sslip.io',
+      'web-tx3htnl2yqa0.up-de-fra1-k8s-1.apps.run-on-seenode.com',
       '*'
     ],
   }
