@@ -18,6 +18,7 @@ EXPOSE 3000
 ENV NODE_ENV=production
 ENV PORT=3000
 ENV HOST=0.0.0.0
+ENV VITE_PREVIEW_ALLOWED_HOSTS=all
 
 # Start the application
-CMD ["npm", "run", "start"]
+CMD ["astro", "preview", "--host", "0.0.0.0", "--port", "3000"]
