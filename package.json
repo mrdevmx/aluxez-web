@@ -5,8 +5,7 @@
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
-    "preview": "astro preview --port 3000 --host 0.0.0.0",
-    "start": "astro preview --port 3000 --host 0.0.0.0 --disable-host-check"
+    "preview": "astro preview"
   },
   "dependencies": {
     "@fontsource/nunito-sans": "^5.1.1",
