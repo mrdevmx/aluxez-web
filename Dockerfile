@@ -21,4 +21,4 @@ ENV HOST=0.0.0.0
 ENV VITE_PREVIEW_ALLOWED_HOSTS=all
 
 # Start the application
-CMD ["astro", "preview", "--host", "0.0.0.0", "--port", "3000"]
+CMD ["npx", "astro", "preview", "--host", "0.0.0.0", "--port", "3000"]
