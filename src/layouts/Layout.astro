@@ -12,6 +12,15 @@ import "@fontsource/nunito-sans";
     <title>Aluxez Administración</title>
     <link rel="icon" type="image/svg+xml" href="/favicons/96px.svg" />
     <link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
+    <style>
+      /* Ocultar elementos de debugging y herramientas de desarrollo */
+      [class*="debug"], [class*="inspect"], [class*="dev-tool"] {
+        display: none !important;
+      }
+      .debug-overlay, .css-inspector, .tooltip-debug, .dev-tools-tooltip {
+        display: none !important;
+      }
+    </style>
   </head>
   <body>
     <slot />

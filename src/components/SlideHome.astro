@@ -51,28 +51,34 @@ const slides = [
   .animate-floating {
     animation: floating 5s ease-in-out infinite;
   }
+  
+  /* Ocultar elementos de debugging que puedan aparecer */
+  [data-debug], .debug-info, .dev-tools {
+    display: none !important;
+  }
 </style>
 
-<div class="container m-auto p-10 w-full h-[700px] flex flex-wrap items-center mt-[128px]">
-  <div class="relative max-lg:text-center w-1/2 max-lg:w-full max-lg:h-[50%] max-lg:mt-[3rem]">
+<div class="container m-auto px-10 w-full h-[calc(100vh-128px)] flex flex-wrap items-center justify-center relative z-10">
+  <div class="relative text-center w-full xl:w-1/2 px-4 lg:px-0 -mt-16 md:-mt-12 lg:mt-0">
     {slides.map((slide, index) => (
       <div
-        class={`max-lg:w-full absolute transition-opacity duration-1000 ease-in-out slide-content ${index === 0 ? 'opacity-100' : 'opacity-0'}`}
+        class={`w-full absolute transition-opacity duration-1000 ease-in-out slide-content ${index === 0 ? 'opacity-100' : 'opacity-0'}`}
         data-slide-index={index}
       >
-        <h1 class="text-5xl text-wrap sm:text-5xl font-bold text-secondary-light">
+        <h1 class="text-3xl md:text-5xl lg:text-5xl text-wrap font-bold text-secondary-light leading-tight">
           {slide.title}
           <span class="text-secondary">{slide.subtitle}</span>
         </h1>
-        <p class="w-full mt-4 text-lg text-left max-lg:text-center text-secondary-light">
+        <p class="w-full mt-4 text-base md:text-xl lg:text-lg text-center xl:text-left text-secondary-light max-w-2xl md:max-w-4xl xl:max-w-2xl mx-auto xl:mx-0">
           {slide.description}
         </p>
       </div>
     ))}
   </div>
   
-  <div class="w-1/2 flex flex-row-reverse backdrop-opacity-10 max-lg:w-full max-lg:h-[50%] max-lg:mt-[3rem] max-lg:hidden">
-    <div class="w-full grid grid-flow-col grid-rows-2 grid-cols-3 gap-8">
+  <!-- Iconos flotantes - solo visibles en desktop extra grande (1280px+) -->
+  <div class="w-full lg:w-1/2 justify-center lg:flex-row-reverse mt-8 lg:mt-0 hidden xl:flex">
+    <div class="w-full max-w-md lg:max-w-full grid grid-flow-col grid-rows-2 grid-cols-3 gap-4 lg:gap-8">
       <div class="transform scale-75 -rotate-6 translate-x-20">
         <img src="/iconografia/Recurso44.png" alt="" class="animate-floating" />
       </div>
@@ -91,7 +97,10 @@ const slides = [
     </div>
   </div>
 
-  <Carousel items={images} autoplay={true} loop={true} />
+  <!-- Carrusel posicionado en la parte inferior -->
+  <div class="absolute bottom-20 md:bottom-28 lg:bottom-40 left-1/2 transform -translate-x-1/2 z-20">
+    <Carousel items={images} autoplay={true} loop={true} />
+  </div>
 </div>
 
 <script>

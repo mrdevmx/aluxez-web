@@ -21,7 +21,7 @@ const {
 
 <div 
   id="carousel" 
-  class="carousel lg:hidden" 
+  class="carousel block lg:hidden" 
   data-autoplay={autoplay}
   data-autoplay-speed={autoplaySpeed}
   data-loop={loop}
@@ -64,9 +64,21 @@ const {
 .carousel {
   position: relative;
   overflow: hidden;
-  width: 50%;
-  max-width: 600px;
+  width: 90%;
+  max-width: 450px;
   margin: auto;
+}
+@media (min-width: 768px) {
+  .carousel {
+    width: 70%;
+    max-width: 400px;
+  }
+}
+@media (min-width: 1024px) {
+  .carousel {
+    width: 45%;
+    max-width: 280px;
+  }
 }
 .carousel-track {
   display: flex;
@@ -79,6 +91,21 @@ const {
 }
 .carousel-item img {
   margin: auto;
+  width: 140px;
+  height: 140px;
+  object-fit: contain;
+}
+@media (min-width: 768px) {
+  .carousel-item img {
+    width: 180px;
+    height: 180px;
+  }
+}
+@media (min-width: 1024px) {
+  .carousel-item img {
+    width: 100px;
+    height: 100px;
+  }
 }
 .prev, .next {
   position: absolute;
@@ -87,24 +114,59 @@ const {
   background: transparent;
   color: #CAAA5F;
   border: none;
-  padding: 10px;
+  padding: 12px;
   cursor: pointer;
   z-index: 10;
+  font-size: 18px;
+  font-weight: bold;
 }
-.prev { left: 10px; }
-.next { right: 10px; }
+@media (min-width: 768px) {
+  .prev, .next {
+    font-size: 20px;
+    padding: 15px;
+  }
+}
+@media (min-width: 1024px) {
+  .prev, .next {
+    font-size: 16px;
+    padding: 10px;
+  }
+}
+.prev { left: 15px; }
+.next { right: 15px; }
 .dots {
   text-align: center;
-  margin-top: 10px;
+  margin-top: 20px;
 }
 .dots span {
-  height: 10px;
-  width: 10px;
-  margin: 5px;
+  height: 12px;
+  width: 12px;
+  margin: 6px;
   background: #dac48f;
   display: inline-block;
   border-radius: 50%;
   cursor: pointer;
+  transition: all 0.3s ease;
+}
+@media (min-width: 768px) {
+  .dots {
+    margin-top: 25px;
+  }
+  .dots span {
+    height: 14px;
+    width: 14px;
+    margin: 8px;
+  }
+}
+@media (min-width: 1024px) {
+  .dots {
+    margin-top: 15px;
+  }
+  .dots span {
+    height: 10px;
+    width: 10px;
+    margin: 5px;
+  }
 }
 .dots .active {
   background: #CAAA5F;
