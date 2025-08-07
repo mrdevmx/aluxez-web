@@ -58,7 +58,7 @@ const socialIcons = [
       <img
         src={brandLogo}
         alt="Aluxez Administración"
-        class="w-64 h-auto object-contain transition-all duration-300"
+        class="w-32 sm:w-40 md:w-48 lg:w-64 h-auto object-contain transition-all duration-300"
         id="brand-logo"
       />
     </div>
@@ -205,13 +205,13 @@ const socialIcons = [
         if (this.isScrolled) {
           this.elements.menuElement?.classList.add('bg-primary-dark', 'h-[80px]', 'shadow-lg');
           this.elements.menuElement?.classList.remove('h-[128px]');
-          this.elements.brandLogo?.classList.add('w-32');
-          this.elements.brandLogo?.classList.remove('w-64');
+          this.elements.brandLogo?.classList.add('w-24', 'sm:w-28', 'md:w-32', 'lg:w-32');
+          this.elements.brandLogo?.classList.remove('w-32', 'sm:w-40', 'md:w-48', 'lg:w-64');
         } else {
           this.elements.menuElement?.classList.remove('bg-primary-dark', 'h-[80px]', 'shadow-lg');
           this.elements.menuElement?.classList.add('h-[128px]');
-          this.elements.brandLogo?.classList.remove('w-32');
-          this.elements.brandLogo?.classList.add('w-64');
+          this.elements.brandLogo?.classList.remove('w-24', 'sm:w-28', 'md:w-32', 'lg:w-32');
+          this.elements.brandLogo?.classList.add('w-32', 'sm:w-40', 'md:w-48', 'lg:w-64');
         }
       }
     }

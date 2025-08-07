@@ -91,14 +91,20 @@ const {
 }
 .carousel-item img {
   margin: auto;
-  width: 140px;
-  height: 140px;
+  width: 100px;
+  height: 100px;
   object-fit: contain;
+}
+@media (min-width: 640px) {
+  .carousel-item img {
+    width: 120px;
+    height: 120px;
+  }
 }
 @media (min-width: 768px) {
   .carousel-item img {
-    width: 180px;
-    height: 180px;
+    width: 150px;
+    height: 150px;
   }
 }
 @media (min-width: 1024px) {
