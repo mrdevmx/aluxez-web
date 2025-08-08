@@ -2,27 +2,16 @@
 // Carousel.astro - Migración del componente Vue a Astro
 interface Props {
   items: any[];
-  autoplay?: boolean;
-  autoplaySpeed?: number;
-  loop?: boolean;
-  showArrows?: boolean;
 }
 
 const { 
-  items, 
-  autoplay = true, 
-  autoplaySpeed = 3000, 
-  loop = true, 
-  showArrows = true 
+  items 
 } = Astro.props;
 ---
 
 <div 
   id="carousel" 
-  class="carousel block" 
-  data-autoplay={autoplay}
-  data-autoplay-speed={autoplaySpeed}
-  data-loop={loop}
+  class="carousel block"
 >
   <!-- Slides -->
   <div class="carousel-track">
@@ -67,8 +56,8 @@ const {
   display: flex;
   animation: scroll 30s linear infinite;
   gap: 20px;
-  width: calc(100% * 2); /* Duplicamos el ancho para alojar dos copias completas */
-  padding-left: 20px;
+  width: calc(100% * 2);
+  padding-left: 0;
 }
 .carousel-item {
   flex: 0 0 auto;
@@ -76,20 +65,6 @@ const {
   padding: 6px;
   position: relative;
   margin-right: 20px;
-}
-
-@media (min-width: 768px) {
-  .carousel {
-    max-width: 100%;
-    margin: 50px auto 0;
-  }
-}
-
-@media (min-width: 1024px) {
-  .carousel {
-    max-width: 100%;
-    margin: 45px auto 0;
-  }
 }
 
 .carousel-card {
@@ -106,14 +81,12 @@ const {
   border: 2px solid rgba(202, 170, 95, 0.3);
   backdrop-filter: blur(8px);
   transition: all 0.3s ease;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
   overflow: hidden;
 }
 
 .carousel-card:hover {
   transform: translateY(-4px) scale(1.05);
   border-color: rgba(202, 170, 95, 0.6);
-  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2);
 }
 
 .carousel-card::before {
