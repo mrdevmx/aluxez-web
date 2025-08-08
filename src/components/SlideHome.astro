@@ -75,9 +75,9 @@ const slides = [
       </div>
     ))}
   </div>
-  
+
   <!-- Iconos flotantes - solo visibles en desktop extra grande (1280px+) -->
-  <div class="w-full lg:w-1/2 justify-center lg:flex-row-reverse mt-8 lg:mt-0 hidden xl:flex">
+  <div class="w-full lg:w-1/2 justify-center lg:flex-row-reverse mt-8 md:mt-0 hidden xl:flex">
     <div class="w-full max-w-md lg:max-w-full grid grid-flow-col grid-rows-2 grid-cols-3 gap-4 lg:gap-8">
       <div class="transform scale-75 -rotate-6 translate-x-20">
         <img src="/iconografia/Recurso44.png" alt="" class="animate-floating" />
@@ -97,8 +97,8 @@ const slides = [
     </div>
   </div>
 
-  <!-- Carrusel posicionado en la parte inferior -->
-  <div class="absolute bottom-8 sm:bottom-16 md:bottom-20 lg:bottom-40 left-1/2 transform -translate-x-1/2 z-20">
+     <!-- Carrusel posicionado en la parte inferior -->
+  <div class="w-full h-100% top-5 sm:bottom-16 md:bottom-20 lg:bottom-40">
     <Carousel items={images} autoplay={true} loop={true} />
   </div>
 </div>
