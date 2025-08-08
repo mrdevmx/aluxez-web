@@ -19,26 +19,16 @@ const {
 
 <div 
   id="carousel" 
-  class="carousel block lg:hidden" 
+  class="carousel block" 
   data-autoplay={autoplay}
   data-autoplay-speed={autoplaySpeed}
   data-loop={loop}
 >
   <!-- Slides -->
-  <div id="carousel-track" class="carousel-track">
-    <!-- Elementos duplicados al final para efecto infinito -->
-    {items.slice(-2).map((item, index) => (
-      <div class="carousel-item flex items-center justify-center clone">
-        <div class="carousel-card">
-          <img src={typeof item === 'string' ? item : item.src} alt={`Imagen ${items.length - 2 + index + 1}`} />
-          <div class="card-overlay"></div>
-        </div>
-      </div>
-    ))}
-    
-    <!-- Elementos originales -->
+  <div class="carousel-track">
+    <!-- Primera copia de los items -->
     {items.map((item, index) => (
-      <div class="carousel-item flex items-center justify-center" data-index={index}>
+      <div class="carousel-item flex items-center justify-center">
         <div class="carousel-card">
           <img src={typeof item === 'string' ? item : item.src} alt={`Imagen ${index + 1}`} />
           <div class="card-overlay"></div>
@@ -46,9 +36,9 @@ const {
       </div>
     ))}
     
-    <!-- Elementos duplicados al inicio para efecto infinito -->
-    {items.slice(0, 2).map((item, index) => (
-      <div class="carousel-item flex items-center justify-center clone">
+    <!-- Segunda copia de los items para el efecto continuo -->
+    {items.map((item, index) => (
+      <div class="carousel-item flex items-center justify-center">
         <div class="carousel-card">
           <img src={typeof item === 'string' ? item : item.src} alt={`Imagen ${index + 1}`} />
           <div class="card-overlay"></div>
@@ -61,46 +51,44 @@ const {
 <style>
 .carousel {
   position: relative;
-  overflow: visible;
+  overflow: hidden;
   width: 100%;
-  max-width: 400px;
+  max-width: 100%;
   margin: 40px auto 0;
-  padding: 0 40px;
+  padding: 0;
 }
-@media (min-width: 768px) {
-  .carousel {
-    max-width: 450px;
-    margin: 50px auto 0;
-    padding: 0 50px;
-  }
+
+@keyframes scroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(calc(-100% / 2)); }
 }
-@media (min-width: 1024px) {
-  .carousel {
-    max-width: 400px;
-    margin: 45px auto 0;
-    padding: 0 45px;
-  }
-}
+
 .carousel-track {
   display: flex;
-  transition: transform 0.5s ease-in-out;
-  transform: translateX(0%);
-  gap: 8px;
+  animation: scroll 30s linear infinite;
+  gap: 20px;
+  width: calc(100% * 2); /* Duplicamos el ancho para alojar dos copias completas */
+  padding-left: 20px;
 }
 .carousel-item {
-  min-width: 45%;
-  flex-shrink: 0;
+  flex: 0 0 auto;
   text-align: center;
   padding: 6px;
   position: relative;
-  transition: all 0.3s ease;
-  opacity: 1;
-  transform: scale(1);
+  margin-right: 20px;
 }
 
 @media (min-width: 768px) {
-  .carousel-item {
-    min-width: 40%;
+  .carousel {
+    max-width: 100%;
+    margin: 50px auto 0;
+  }
+}
+
+@media (min-width: 1024px) {
+  .carousel {
+    max-width: 100%;
+    margin: 45px auto 0;
   }
 }
 
@@ -211,153 +199,24 @@ const {
 </style>
 
 <script>
-  interface CarouselElements {
-    carousel: HTMLElement | null;
-    track: HTMLElement | null;
-  }
-
-  interface CarouselConfig {
-    autoplay: boolean;
-    autoplaySpeed: number;
-    loop: boolean;
-    itemCount: number;
-  }
-
-  class AstroCarousel {
-    private elements: CarouselElements;
-    private config: CarouselConfig;
-    private currentIndex: number = 0;
-    private autoplayInterval: number | null = null;
-    private realItemCount: number;
-    private isTransitioning: boolean = false;
-
-    constructor() {
-      this.elements = {
-        carousel: document.getElementById('carousel'),
-        track: document.getElementById('carousel-track'),
-      };
-      
-      // Obtener configuración del DOM
-      const carousel = this.elements.carousel;
-      this.realItemCount = document.querySelectorAll('.carousel-item:not(.clone)').length;
-      this.config = {
-        autoplay: carousel?.dataset.autoplay === 'true',
-        autoplaySpeed: parseInt(carousel?.dataset.autoplaySpeed || '3000'),
-        loop: carousel?.dataset.loop === 'true',
-        itemCount: this.realItemCount
-      };
-      
-      // Empezar en el primer elemento real (después de los clones)
-      this.currentIndex = 2;
-      
-      this.init();
-    }
-    
-    init(): void {
-      this.bindEvents();
-      // Asegurarse que el carrusel comienza en la posición correcta
-      this.updateSlideInstant();
-      setTimeout(() => {
-        if (this.config.autoplay) {
-          this.startAutoplay();
-        }
-      }, 100);
-    }
-    
-    bindEvents(): void {
-      this.elements.carousel?.addEventListener('mouseenter', () => this.stopAutoplay());
-      this.elements.carousel?.addEventListener('mouseleave', () => this.startAutoplay());
-    }
-    
-    goToSlide(index: number): void {
-      if (this.isTransitioning) return;
-      
-      this.currentIndex = index + 2; // Ajustar por los clones al inicio
-      this.updateSlide();
-    }
-    
-    goToPrev(): void {
-      if (this.isTransitioning) return;
-      
-      this.isTransitioning = true;
-      this.currentIndex--;
-      this.updateSlide();
-      
-      // Si llegamos a un clon, saltar al elemento real
-      if (this.currentIndex < 2) {
-        setTimeout(() => {
-          this.currentIndex = this.realItemCount + 1;
-          this.updateSlideInstant();
-          this.isTransitioning = false;
-        }, 300);
-      } else {
-        setTimeout(() => {
-          this.isTransitioning = false;
-        }, 300);
-      }
-    }
-    
-    goToNext(): void {
-      if (this.isTransitioning) return;
-      
-      this.isTransitioning = true;
-      this.currentIndex++;
-      this.updateSlide();
-      
-      // Si llegamos a un clon, saltar al elemento real
-      if (this.currentIndex >= this.realItemCount + 2) {
-        setTimeout(() => {
-          this.currentIndex = 2;
-          this.updateSlideInstant();
-          this.isTransitioning = false;
-        }, 300);
-      } else {
-        setTimeout(() => {
-          this.isTransitioning = false;
-        }, 300);
-      }
-    }
-    
-    updateSlide(): void {
-      if (this.elements.track) {
-        const offset = this.currentIndex * 45; // 45% por elemento
-        this.elements.track.style.transform = `translateX(-${offset}%)`;
-      }
-    }
-    
-    updateSlideInstant(): void {
-      if (this.elements.track) {
-        this.elements.track.style.transition = 'none';
-        const offset = this.currentIndex * 45;
-        this.elements.track.style.transform = `translateX(-${offset}%)`;
-        
-        // Restaurar la transición
-        requestAnimationFrame(() => {
-          if (this.elements.track) {
-            this.elements.track.style.transition = 'transform 0.5s ease-in-out';
-          }
-        });
-      }
-    }
-    
-    startAutoplay(): void {
-      if (this.config.autoplay && !this.autoplayInterval) {
-        this.autoplayInterval = window.setInterval(() => {
-          this.goToNext();
-        }, this.config.autoplaySpeed);
-      }
-    }
-    
-    stopAutoplay(): void {
-      if (this.autoplayInterval) {
-        clearInterval(this.autoplayInterval);
-        this.autoplayInterval = null;
-      }
-    }
-  }
-
-  // Inicializar cuando el DOM esté listo
   document.addEventListener('DOMContentLoaded', () => {
-    new AstroCarousel();
+    const carousel = document.querySelector('.carousel');
+    
+    // Pausa la animación al pasar el ratón sobre el carrusel
+    if (carousel) {
+      carousel.addEventListener('mouseenter', () => {
+        const track = carousel.querySelector('.carousel-track') as HTMLElement;
+        if (track) {
+          track.style.animationPlayState = 'paused';
+        }
+      });
+      
+      carousel.addEventListener('mouseleave', () => {
+        const track = carousel.querySelector('.carousel-track') as HTMLElement;
+        if (track) {
+          track.style.animationPlayState = 'running';
+        }
+      });
+    }
   });
 </script>
