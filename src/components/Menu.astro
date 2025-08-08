@@ -65,7 +65,7 @@ const socialIcons = [
     <div class="flex flex-row-reverse">
       <button
         id="menu-toggle"
-        class="flex flex-col justify-center items-center w-12 h-12 p-2 relative transition-all duration-300 mr-2 z-[60]"
+        class="flex flex-col justify-center items-center w-12 h-12 p-2 relative transition-all duration-300 mr-2 z-[70]"
       >
         <div
           id="line1"
@@ -86,7 +86,7 @@ const socialIcons = [
   <!-- Menu dropdown -->
   <div
     id="menu-dropdown"
-    class="absolute left-1/2 z-50 mt-8 flex w-screen max-w-max -translate-x-1/2 px-4 opacity-0 translate-y-1 pointer-events-none transition-all duration-200 max-h-[80vh] overflow-auto"
+    class="absolute left-1/2 z-60 mt-8 flex w-screen max-w-max -translate-x-1/2 px-4 opacity-0 translate-y-1 pointer-events-none transition-all duration-200 max-h-[80vh] overflow-auto"
   >
     <div
       class="w-screen max-w-md flex-auto overflow-hidden rounded-3xl bg-primary-dark text-sm/6 ring-1 shadow-lg ring-gray-900/5"
@@ -197,6 +197,9 @@ const socialIcons = [
         document.body.style.top = `-${this.scrollPosition}px`;
         document.body.classList.add('menu-open');
         document.documentElement.classList.add('menu-open');
+        
+        // Asegurarse de que el overlay se muestre correctamente
+        document.getElementById('page-overlay')?.classList.add('active');
       } else {
         // Cerrar menu
         this.elements.menuDropdown?.classList.add('opacity-0', 'translate-y-1', 'pointer-events-none');
@@ -212,6 +215,9 @@ const socialIcons = [
         document.documentElement.classList.remove('menu-open');
         document.body.style.paddingRight = '';
         document.body.style.top = '';
+        
+        // Asegurarse de que el overlay se oculte correctamente
+        document.getElementById('page-overlay')?.classList.remove('active');
         
         // Restaurar posición de scroll exacta
         window.scrollTo({
@@ -242,8 +248,15 @@ const socialIcons = [
     }
 
     handleClickOutside(event: Event): void {
-      // Ya no cerramos el menú al hacer clic fuera
-      // El menú solo se cierra al hacer clic en el botón de menú
+      // Detenemos la propagación del evento si se hace clic en el overlay
+      const target = event.target as HTMLElement;
+      const overlay = document.getElementById('page-overlay');
+      
+      if (overlay && target === overlay && this.isMenuOpen) {
+        // Detenemos el evento para evitar interacciones con el contenido de fondo
+        event.preventDefault();
+        event.stopPropagation();
+      }
     }
   }
 
