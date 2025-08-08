@@ -86,12 +86,12 @@ const socialIcons = [
   <!-- Menu dropdown -->
   <div
     id="menu-dropdown"
-    class="absolute left-1/2 z-60 mt-8 flex w-screen max-w-max -translate-x-1/2 px-4 opacity-0 translate-y-1 pointer-events-none transition-all duration-200 max-h-[80vh] overflow-auto"
+    class="fixed left-1/2 top-[80px] sm:top-[90px] z-60 flex w-screen max-w-max -translate-x-1/2 px-4 opacity-0 translate-y-1 pointer-events-none transition-all duration-200 max-h-[85vh] sm:max-h-[80vh] overflow-auto"
   >
     <div
-      class="w-screen max-w-md flex-auto overflow-hidden rounded-3xl bg-primary-dark text-sm/6 ring-1 shadow-lg ring-gray-900/5"
+      class="w-screen max-w-md flex-auto overflow-hidden rounded-3xl bg-primary-dark text-sm/6 ring-1 shadow-lg ring-gray-900/5 max-h-[85vh] flex flex-col"
     >
-      <div class="p-4">
+      <div class="p-4 overflow-y-auto flex-1">
         {menuItems.map((item) => (
           <div class="group relative flex gap-x-6 rounded-lg p-4 hover:bg-secondary">
             <div class="mt-1 flex size-11 flex-none items-center justify-center rounded-lg bg-primary group-hover:bg-primary">
@@ -110,7 +110,7 @@ const socialIcons = [
           </div>
         ))}
       </div>
-      <div class="grid grid-cols-2 divide-x divide-primary bg-primary-dark">
+      <div class="grid grid-cols-2 divide-x divide-primary bg-primary-dark flex-shrink-0">
         <a
           href="#"
           class="flex items-center justify-center gap-x-2.5 p-3 font-semibold text-secondary hover:text-secondary"
@@ -171,6 +171,18 @@ const socialIcons = [
       this.elements.menuToggle?.addEventListener('click', () => this.toggleMenu());
       window.addEventListener('scroll', () => this.handleScroll());
       document.addEventListener('click', (event: Event) => this.handleClickOutside(event));
+      window.addEventListener('resize', () => this.handleResize());
+    }
+    
+    handleResize(): void {
+      // Ajustar posición del menú dropdown según el tamaño de la pantalla si está abierto
+      if (this.isMenuOpen) {
+        if (window.innerHeight < 600) {
+          this.elements.menuDropdown?.classList.add('small-screen');
+        } else {
+          this.elements.menuDropdown?.classList.remove('small-screen');
+        }
+      }
     }
 
     toggleMenu(): void {
@@ -197,6 +209,14 @@ const socialIcons = [
         document.body.style.top = `-${this.scrollPosition}px`;
         document.body.classList.add('menu-open');
         document.documentElement.classList.add('menu-open');
+        
+        // Ajustar posición del menú dropdown según el tamaño de la pantalla
+        if (window.innerHeight < 600) {
+          // Para pantallas muy pequeñas en altura
+          this.elements.menuDropdown?.classList.add('small-screen');
+        } else {
+          this.elements.menuDropdown?.classList.remove('small-screen');
+        }
         
         // Asegurarse de que el overlay se muestre correctamente
         document.getElementById('page-overlay')?.classList.add('active');

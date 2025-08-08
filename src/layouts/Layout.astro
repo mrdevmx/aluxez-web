@@ -60,6 +60,19 @@ import "@fontsource/nunito-sans";
         visibility: visible;
         cursor: default; /* Mostrar cursor normal */
       }
+      
+      /* Estilos para pantallas pequeñas */
+      @media (max-height: 600px) {
+        #menu-dropdown {
+          top: 60px !important;
+          max-height: calc(100vh - 70px) !important;
+        }
+      }
+      
+      /* Clase que se aplica para pantallas muy pequeñas */
+      #menu-dropdown.small-screen {
+        top: 60px !important;
+      }
     </style>
   </head>
   <body>
