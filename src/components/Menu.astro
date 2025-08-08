@@ -86,7 +86,7 @@ const socialIcons = [
   <!-- Menu dropdown -->
   <div
     id="menu-dropdown"
-    class="absolute left-1/2 z-50 mt-8 flex w-screen max-w-max -translate-x-1/2 px-4 opacity-0 translate-y-1 pointer-events-none transition-all duration-200"
+    class="absolute left-1/2 z-50 mt-8 flex w-screen max-w-max -translate-x-1/2 px-4 opacity-0 translate-y-1 pointer-events-none transition-all duration-200 max-h-[80vh] overflow-auto"
   >
     <div
       class="w-screen max-w-md flex-auto overflow-hidden rounded-3xl bg-primary-dark text-sm/6 ring-1 shadow-lg ring-gray-900/5"
@@ -147,6 +147,7 @@ const socialIcons = [
     private elements: MenuElements;
     private isMenuOpen: boolean = false;
     private isScrolled: boolean = false;
+    private scrollPosition: number = 0;
 
     constructor() {
       this.elements = {
@@ -176,6 +177,9 @@ const socialIcons = [
       this.isMenuOpen = !this.isMenuOpen;
       
       if (this.isMenuOpen) {
+        // Guardar posición de scroll actual antes de cualquier cambio
+        this.scrollPosition = window.scrollY;
+        
         // Abrir menu
         this.elements.menuDropdown?.classList.remove('opacity-0', 'translate-y-1', 'pointer-events-none');
         this.elements.menuDropdown?.classList.add('opacity-100', 'translate-y-0');
@@ -184,6 +188,15 @@ const socialIcons = [
         this.elements.line1?.classList.add('rotate-45', 'translate-y-2');
         this.elements.line2?.classList.add('opacity-0');
         this.elements.line3?.classList.add('-rotate-45', '-translate-y-2');
+        
+        // Crear div de espaciador para mantener el contenido en su posición
+        const scrollBarWidth = window.innerWidth - document.documentElement.clientWidth;
+        document.body.style.paddingRight = `${scrollBarWidth}px`;
+        
+        // Fijar el body en la posición actual
+        document.body.style.top = `-${this.scrollPosition}px`;
+        document.body.classList.add('menu-open');
+        document.documentElement.classList.add('menu-open');
       } else {
         // Cerrar menu
         this.elements.menuDropdown?.classList.add('opacity-0', 'translate-y-1', 'pointer-events-none');
@@ -193,6 +206,18 @@ const socialIcons = [
         this.elements.line1?.classList.remove('rotate-45', 'translate-y-2');
         this.elements.line2?.classList.remove('opacity-0');
         this.elements.line3?.classList.remove('-rotate-45', '-translate-y-2');
+        
+        // Restaurar estado normal
+        document.body.classList.remove('menu-open');
+        document.documentElement.classList.remove('menu-open');
+        document.body.style.paddingRight = '';
+        document.body.style.top = '';
+        
+        // Restaurar posición de scroll exacta
+        window.scrollTo({
+          top: this.scrollPosition,
+          behavior: 'instant' // Cambio instantáneo sin animación
+        });
       }
     }
 
@@ -217,10 +242,8 @@ const socialIcons = [
     }
 
     handleClickOutside(event: Event): void {
-      const target = event.target as HTMLElement;
-      if (this.elements.menuElement && !this.elements.menuElement.contains(target) && this.isMenuOpen) {
-        this.toggleMenu();
-      }
+      // Ya no cerramos el menú al hacer clic fuera
+      // El menú solo se cierra al hacer clic en el botón de menú
     }
   }
 
