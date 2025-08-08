@@ -59,13 +59,13 @@ const slides = [
 </style>
 
 <div class="container m-auto px-4 sm:px-6 lg:px-10 w-full h-full flex flex-wrap items-center justify-center relative z-10">
-  <div class="relative text-center w-full xl:w-1/2 px-4 lg:px-0 -mt-20 sm:-mt-16 md:-mt-12 lg:mt-0">
+  <div class="relative text-center xl:text-left w-full xl:w-1/2 px-4 lg:px-0 -mt-20 sm:-mt-16 md:-mt-12 lg:mt-0">
     {slides.map((slide, index) => (
       <div
         class={`w-full absolute transition-opacity duration-1000 ease-in-out slide-content ${index === 0 ? 'opacity-100' : 'opacity-0'}`}
         data-slide-index={index}
       >
-        <h1 class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl text-wrap font-bold text-secondary-light leading-tight mb-4">
+        <h1 class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl text-wrap font-bold text-secondary-light leading-tight mb-4 text-center xl:text-left">
           {slide.title}
           <span class="text-secondary">{slide.subtitle}</span>
         </h1>
