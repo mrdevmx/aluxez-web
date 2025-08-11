@@ -1,0 +1,145 @@
+---
+---
+<section class="container mx-auto px-6 py-16 flex flex-col md:flex-row items-center justify-between mt-8 lg:mt-0">
+  <div class="w-1/2 max-lg:w-full mb-10 md:mb-0">
+    <h1 class="text-5xl font-bold text-secondary mb-4">
+      Una administración,<br>
+      <span class="text-secondary-light">todas tus soluciones</span>
+    </h1>
+    <p class="text-lg text-secondary-light mb-8">
+      En Aluxez Administración sabemos que cada residencial tiene necesidades únicas. Por eso, ofrecemos soluciones integrales que garantizan el cuidado, funcionamiento y armonía de tu comunidad, con un enfoque en calidad, eficiencia y transparencia.
+    </p>
+    <button class="bitems-center gap-2 bg-secondary-dark hover:bg-secondary text-secondary-light hover:text-secondary-dark font-semibold py-2 px-4 rounded-lg shadow-md transition">
+      Conoce todas las soluciones
+       <i class="fas fa-arrow-right transition-transform duration-300 transform translate-x-1"></i>
+    </button>
+  </div>
+  <div class="w-1/2 max-lg:w-full flex flex-col">
+    <div class="flex items-start gap-6">
+      <div class="flex flex-col items-center">
+        <div class="features-card flex items-center justify-center">
+          <img src="/iconografia/Recurso43.png" alt="" class="features-img" />
+        </div>
+        <div class="h-10 w-px bg-secondary-light my-2 mx-auto"></div>
+      </div>
+      <div>
+        <h3 class="font-semibold text-secondary">Cuidado de Jardinería</h3>
+        <p class="text-secondary-light">Mantenemos las áreas verdes siempre limpias, sanas y estéticamente cuidadas para que tu residencial luzca en su mejor versión durante todo el año.</p>
+      </div>
+    </div>
+    <div class="flex items-start gap-6">
+      <div class="flex flex-col items-center">
+        <div class="features-card flex items-center justify-center">
+          <img src="/iconografia/Recurso42.png" alt="" class="features-img" />
+        </div>
+        <div class="h-10 w-px bg-secondary-light my-2 mx-auto"></div>
+      </div>
+      <div>
+        <h3 class="font-semibold text-secondary">Limpieza de Áreas Comunes</h3>
+        <p class="text-secondary-light">Garantizamos espacios impecables y libres de suciedad, mejorando la imagen y el bienestar de todos los residentes.</p>
+      </div>
+    </div>
+    <div class="flex items-start gap-6">
+      <div class="flex flex-col items-center">
+        <div class="features-card flex items-center justify-center">
+          <img src="/iconografia/Recurso44.png" alt="" class="features-img" />
+        </div>
+        <div class="h-10 w-px bg-secondary-light my-2 mx-auto"></div>
+      </div>
+      <div>
+        <h3 class="font-semibold text-secondary">Mantenimiento de Albercas</h3>
+        <p class="text-secondary-light">Supervisamos y realizamos el cuidado técnico y químico de las albercas para asegurar su funcionamiento óptimo y la seguridad de quienes las disfrutan.</p>
+      </div>
+    </div>
+    <div class="flex items-start gap-6">
+      <div class="flex flex-col items-center">
+        <div class="features-card flex items-center justify-center">
+          <img src="/iconografia/Recurso41.png" alt="" class="features-img" />
+        </div>
+      </div>
+      <div>
+        <h3 class="font-semibold text-secondary">Mantenimiento General</h3>
+        <p class="text-secondary-light">Atendemos y damos solución a reparaciones y mejoras necesarias para el correcto funcionamiento de tu residencial, evitando problemas mayores a futuro.</p>
+      </div>
+    </div>
+</section>
+<style>
+.features-card {
+  position: relative;
+  background: linear-gradient(135deg, rgba(202, 170, 95, 0.1), rgba(202, 170, 95, 0.2));
+  border-radius: 20px;
+  padding: 16px;
+  margin: 0 auto;
+  width: 87px;
+  height: 87px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid rgba(202, 170, 95, 0.3);
+  backdrop-filter: blur(8px);
+  transition: all 0.3s ease;
+  overflow: hidden;
+}
+.features-card:hover {
+  transform: translateY(-4px) scale(1.05);
+  border-color: rgba(202, 170, 95, 0.6);
+}
+.features-img {
+  width: 51px;
+  height: 51px;
+  object-fit: contain;
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.1));
+  transition: all 0.3s ease;
+  z-index: 2;
+  position: relative;
+}
+.features-card:hover .features-img {
+  transform: scale(1.1);
+  filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.2));
+}
+.features-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(circle at center, rgba(202, 170, 95, 0.05), transparent 70%);
+  border-radius: 18px;
+  pointer-events: none;
+  z-index: 1;
+}
+@media (min-width: 640px) {
+  .features-card {
+    width: 101px;
+    height: 101px;
+    padding: 16px;
+  }
+  .features-img {
+    width: 58px;
+    height: 58px;
+  }
+}
+@media (min-width: 768px) {
+  .features-card {
+    width: 115px;
+    height: 115px;
+    padding: 18px;
+    border-radius: 22px;
+  }
+  .features-img {
+    width: 66px;
+    height: 66px;
+  }
+}
+@media (min-width: 1024px) {
+  .features-card {
+    width: 101px;
+    height: 101px;
+    padding: 16px;
+  }
+  .features-img {
+    width: 58px;
+    height: 58px;
+  }
+}
+</style>
